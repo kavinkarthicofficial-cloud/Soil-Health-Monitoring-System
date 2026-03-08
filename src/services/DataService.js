@@ -9,8 +9,8 @@ if (typeof localStorage === 'undefined') {
 }
 import Paho from 'paho-mqtt';
 
-const MQTT_BROKER = 'test.mosquitto.org';
-const MQTT_PORT = 8080; // WSS or WS port
+const MQTT_BROKER = '192.168.31.243';; // Your Windows PC IP
+const MQTT_PORT = 9001; // WebSockets port we just configured
 const MQTT_TOPIC_DATA = 'agropulse/sensors';
 const MQTT_TOPIC_TRIGGER = 'agropulse/irrigate';
 
@@ -118,8 +118,9 @@ class DataService {
                     soilMoisture: data.soilMoisture !== undefined ? data.soilMoisture : data.soil,
                     soilTemperature: data.soilTemperature !== undefined ? data.soilTemperature : data.temp,
                     humidity: data.humidity !== undefined ? data.humidity : data.hum,
+                    waterLevel: data.waterLevel !== undefined ? data.waterLevel : 0,
                     pH: data.pH !== undefined ? data.pH : 7.0,
-                    predictedIrrigation: data.predictedIrrigation || data.prediction || 0,
+                    irrigation: data.irrigation || { status: 'Optimal', waterRequired: 0, nextIrrigationTime: 'Soon' },
                     sensorHealth: data.sensorHealth || { healthScore: 90 },
                     batteryLevel: data.batteryLevel || 85,
                     timestamp: Date.now()
